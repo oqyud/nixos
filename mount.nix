@@ -31,5 +31,13 @@ in
       options = [ "bind" ];
     };
   };
+  # Syncthing
+  fileSystems = {
+    "${homeDir}/.config/syncthing" = {
+      device = "${programsDir}/syncthing/YuYuL";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+  };
 }
 
