@@ -46,14 +46,6 @@
 
   time.timeZone = "Europe/Moscow";
 
-  # Монтирования bind
-  fileSystems = {
-    "/home/yuyul/Structure/Linux/nixos" = {
-      device = "/etc/nixos";
-      options = [ "bind" ];
-    };
-  };
-
   # Конфигурация NixOS
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
@@ -104,11 +96,11 @@
     #  indicator = true;
     #};
     #waybar.enable = true;
+    #weylus.enable = true;
     xwayland.enable = true;
     kdeconnect.enable = true;
     git.enable = true;
     lazygit.enable = true;
-    #weylus.enable = true;
   };
 
   #xdg.portal = {

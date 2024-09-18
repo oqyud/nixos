@@ -10,16 +10,27 @@ let
   sharedDir = "${structureDir}/Shared";
   storageDir = "${sharedDir}/Storage";
   programsDir = "${storageDir}/Programs";
+  shared_settingsDir = "${storageDir}/Settings";
+  settingsDir = "${shared_settingsDir}/YuYuL";
   #
-  nixosDir = "${sharedDir}/Configs/NixOS";
+  nixosDir = "${settingsDir}/NixOS";
 in
 {
-  # NixOS резерв
+  # NixOS
   fileSystems = {
-  "${nixosDir}" = {
-    device = "/etc/nixos";
-    fsType = "none";
-    options = [ "bind" ];
+    "${nixosDir}" = {
+      device = "/etc/nixos";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+  };
+  #
+  # Hyprland
+  fileSystems = {
+    "${homeDir}/.config/hypr" = {
+      device = "${settingsDir}/hyprland";
+      fsType = "none";
+      options = [ "bind" ];
     };
   };
 
@@ -40,4 +51,3 @@ in
     };
   };
 }
-
