@@ -34,7 +34,7 @@ in
   # Syncthing
   fileSystems = {
     "${homeDir}/.config/syncthing" = {
-      device = "${programsDir}/syncthing/YuYuL";
+      device = "${programsDir}/Syncthing/YuYuL";
       fsType = "none";
       options = [ "bind" ];
     };
