@@ -224,10 +224,11 @@
       # WINE
       #
       #protonplus
-      #wine64
+      wine
+      wine64
+      wineWowPackages.wayland
       #winetricks
       #wineasio
-      #wineWowPackages.waylandFull
       #
     ];
     plasma6.excludePackages = with pkgs.kdePackages; [ ];
