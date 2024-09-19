@@ -10,8 +10,7 @@
 
   imports = [
     ./hardware-configuration.nix # Аппаратная часть
-    ./mount.nix
-    #./disko.nix
+    ./setup/mount.nix
     #inputs.home-manager.nixosModules.default
   ];
 
