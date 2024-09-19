@@ -37,7 +37,7 @@ in
   # Nekoray
   fileSystems = {
     "${homeDir}/.config/nekoray" = {
-      device = "${programsDir}/Nekoray";
+      device = "${programsDir}/Nekoray/YuYuL";
       fsType = "none";
       options = [ "bind" ];
     };

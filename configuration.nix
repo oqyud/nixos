@@ -227,7 +227,9 @@
       wine
       wine64
       wineWowPackages.wayland
-      #winetricks
+      winetricks
+      dosbox
+      dosbox-x
       #wineasio
       #
     ];
