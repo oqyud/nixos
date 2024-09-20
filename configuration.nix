@@ -237,6 +237,10 @@
     plasma6.excludePackages = with pkgs.kdePackages; [ ];
   };
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
+
   systemd.services = {
     base-start = {
       path = [ "/run/current-system/sw" ]; # Запуск в текущей системе
