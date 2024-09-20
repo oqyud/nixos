@@ -195,6 +195,8 @@
       #
       # base, tty
       #
+      sublime4
+      sublime-merge
       acl # для прав
       fzf
       remmina
