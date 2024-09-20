@@ -72,9 +72,9 @@
       brave
       obsidian
       nekoray
-      #_64gram # Не обновлять, приведет к крашу
+      _64gram # Не обновлять, приведет к крашу
       #reaper
-      #transmission_4-gtk
+      transmission_4-gtk
       #prismlauncher
       #vesktop
       #freecad
@@ -224,13 +224,12 @@
       # WINE
       #
       #protonplus
-      wine
       wine64
-      wineWowPackages.wayland
+      wineWowPackages.waylandFull
       winetricks
       dosbox
       dosbox-x
-      #wineasio
+      wineasio
       #
     ];
     plasma6.excludePackages = with pkgs.kdePackages; [ ];
