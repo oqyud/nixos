@@ -226,12 +226,12 @@
       # WINE
       #
       #protonplus
-      wine64
       wineWowPackages.waylandFull
+      wine64
       winetricks
+      wineasio
       dosbox
       dosbox-x
-      wineasio
       #
     ];
     plasma6.excludePackages = with pkgs.kdePackages; [ ];
