@@ -73,8 +73,8 @@
       obsidian
       nekoray
       _64gram # Не обновлять, приведет к крашу
-      #reaper
       transmission_4-gtk
+      #reaper
       #prismlauncher
       #vesktop
       #freecad
@@ -185,16 +185,16 @@
     #  XFT_DPI = "192";
     #};
     systemPackages = with pkgs; [
-      # Hyprland
+      # WINE
       #
-      #rofi-wayland
-      #kitty
-      #dunst
-      #nwg-bar
-      #anyrun
-      #
-      # base, tty
-      #
+      #protonplus
+      wineWowPackages.waylandFull
+      wine64
+      winetricks
+      wineasio
+      dosbox
+      dosbox-x
+      kdePackages.filelight
       sublime4
       sublime-merge
       acl # для прав
@@ -223,16 +223,12 @@
       #inteltool
       #hwinf
       #smartmontools
-      # WINE
-      #
-      #protonplus
-      wineWowPackages.waylandFull
-      wine64
-      winetricks
-      wineasio
-      dosbox
-      dosbox-x
-      #
+      # HYPRLAND
+      #rofi-wayland
+      #kitty
+      #dunst
+      #nwg-bar
+      #anyrun
     ];
     plasma6.excludePackages = with pkgs.kdePackages; [ ];
   };
