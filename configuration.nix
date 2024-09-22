@@ -63,11 +63,13 @@
   users.users.yuyul = {
     isNormalUser = true;
     description = "YuYuL";
+    initialPassword = "4343";
     extraGroups = [
       "networkmanager"
       "wheel"
       "yuyul"
     ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       brave
       obsidian
@@ -101,6 +103,14 @@
     kdeconnect.enable = true;
     git.enable = true;
     lazygit.enable = true;
+    zsh = {
+      enable = true;
+      autosuggestions.enable = true;
+      enableBashCompletion = true;
+      ohMyZsh = {
+        enable = true;
+      };
+    };
   };
 
   #xdg.portal = {
@@ -178,6 +188,12 @@
   };
 
   environment = {
+    sessionVariables = {
+      #XDG_CONFIG_HOME = "$HOME/etc";
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.var/lib";
+      XDG_CACHE_HOME = "$HOME/.var/cache";
+    };
     #variables = {
     #  GDK_SCALE = "1.5";
     #  GDK_DPI_SCALE = "1";
