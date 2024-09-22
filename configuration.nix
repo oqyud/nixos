@@ -63,7 +63,7 @@
   users.users.yuyul = {
     isNormalUser = true;
     description = "YuYuL";
-    initialPassword = "4343";
+    initialPassword = "1234";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -107,9 +107,7 @@
       enable = true;
       autosuggestions.enable = true;
       enableBashCompletion = true;
-      ohMyZsh = {
-        enable = true;
-      };
+      ohMyZsh.enable = true;
     };
   };
 
