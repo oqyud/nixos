@@ -224,6 +224,7 @@
       eza
       nixfmt-rfc-style # Fronmatter
       fdupes
+      neofetch
       #
       #
       # SOMETHING
