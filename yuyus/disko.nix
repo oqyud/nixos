@@ -1,15 +1,15 @@
 {
   disko.devices = {
     disk = {
-      my-disk = {
-        device = "/dev/mmcblk1";
+      main = {
+        device = "/dev/mmcblk0";
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
               type = "EF00";
-              size = "256M";
+              size = "512M";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -17,10 +17,9 @@
               };
             };
             swap = {
-              size = "6G";
+              size = "2G";
               content = {
                 type = "swap";
-                resumeDevice = true;
               };
             };
             root = {
