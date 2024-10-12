@@ -7,17 +7,7 @@
 }:
 
 let
-  homeDir = "/home/yuyus";
-  serverDir = "/mnt/server";
-  structureDir = "${serverDir}/Structure";
-  syncDir = "${serverDir}/Sync";
-  sharedDir = "${structureDir}/Shared";
-  storageDir = "${sharedDir}/Storage";
-  deployDir = "${sharedDir}/Deploy";
-  userDir = "${structureDir}/User";
-  programsDir = "${storageDir}/Programs";
-  settingsDir = "${storageDir}/Settings";
-  nixosDir = "${deployDir}/NixOS/yuyus";
+  my_vars = import ./my_vars.nix;
 in
 {
   imports = [
@@ -28,7 +18,6 @@ in
 
   time.timeZone = "Europe/Moscow";
 
-  # Локализация
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [
@@ -37,17 +26,9 @@ in
     ];
   };
 
-  # Конфигурация NixOS
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" ];
 
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
   users = {
     defaultUserShell = pkgs.zsh;
     users = {
@@ -71,8 +52,7 @@ in
       };
     };
   };
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+
   environment = {
     systemPackages = with pkgs; [
       #bash-completion
@@ -88,27 +68,26 @@ in
       nixfmt-rfc-style # Fronmatter
       sing-box
       yazi
+      iptables
+      efibootmgr # Info
       eza
-      # Something
-      #
-      #iptables
-      #efibootmgr # Info
+      inxi
     ];
   };
 
-  fileSystems =  {
-    "${nixosDir}" = {
+  fileSystems = {
+    "${my_vars.dirs.nixos}" = {
       device = "/etc/nixos";
       fsType = "none";
       options = [ "bind" ];
     };
-    "${syncDir}/Symlinks/VY" = {
-      device = "${userDir}/Vaults/My/Хранилище/Базы данных/VY";
+    "${my_vars.dirs.sync}/Symlinks/VY" = {
+      device = "${my_vars.dirs.user}/Vaults/My/Хранилище/Базы данных/VY";
       fsType = "none";
       options = [ "bind" ];
     };
-    "${serverDir}/Pictures/Camera" = {
-      device = "${syncDir}/YuYuM/Camera";
+    "${my_vars.dirs.home}/Pictures/Camera" = {
+      device = "${my_vars.dirs.sync}/YuYuM/Camera";
       fsType = "none";
       options = [ "bind" ];
     };
@@ -118,8 +97,13 @@ in
     earlyoom.enable = true;
     preload.enable = true;
     auto-cpufreq.enable = true;
-    #thermald.enable = true;
     throttled.enable = true;
+    watchdogd.enable = false;
+    journald = {
+      extraConfig = ''
+        SystemMaxUse=128M
+      '';
+    };
     samba = {
       enable = true;
       settings = {
@@ -167,15 +151,16 @@ in
       };
     };
     calibre-web = {
-      enable = false;
+      enable = true;
       group = "users";
       user = "yuyus";
-      dataDir = "/home/yuyus";
+      #dataDir = "${my_vars.dirs.home}";
       options = {
-        calibreLibrary = "/home/yuyus/Library";
+        calibreLibrary = "${my_vars.dirs.user}/Library";
         enableBookUploading = true;
+        enableKepubify = false;
       };
-      listen.ip = "::1";
+      listen.ip = "0.0.0.0";
       listen.port = 8083;
       openFirewall = true;
     };
@@ -204,8 +189,8 @@ in
       openRPCPort = true;
       settings = {
         incomplete-dir-enabled = true;
-        incomplete-dir = "${serverDir}/Downloads/Temp";
-        download-dir = "${serverDir}/Downloads";
+        incomplete-dir = "${my_vars.dirs.home}/Downloads/Temp";
+        download-dir = "${my_vars.dirs.home}/Downloads";
         rpc-bind-address = "0.0.0.0";
         rpc-port = 9091;
         rpc-whitelist-enabled = false;
@@ -215,13 +200,18 @@ in
       enable = true;
       openFirewall = true;
       port = 9090;
+      settings = {
+        WebService = {
+          AllowUnencrypted = true;
+        };
+      };
     };
     syncthing = {
       enable = true;
       systemService = true;
       guiAddress = "0.0.0.0:8384";
-      configDir = "${programsDir}/Syncthing/YuYuS";
-      #dataDir = "/home/yuyus";
+      configDir = "${my_vars.dirs.programs}/Syncthing/YuYuS";
+      dataDir = "${my_vars.dirs.home}";
       group = "users";
       user = "yuyus";
     };
@@ -406,6 +396,7 @@ in
       };
     };
   };
+
   security = {
     sudo.wheelNeedsPassword = false;
     polkit = {
@@ -442,6 +433,14 @@ in
         theme = "robbyrussell";
       };
     };
+    nix-ld = {
+      # For binary files execution
+      enable = false;
+      libraries =
+        with pkgs;
+        [
+        ];
+    };
   };
 
   systemd.services = {
@@ -466,5 +465,18 @@ in
     useDHCP = lib.mkDefault true;
   };
 
-  system.stateVersion = "24.05";
+  system = {
+    stateVersion = "24.05";
+    autoUpgrade = {
+      enable = true;
+      #flake = inputs.self.outPath;
+      flags = [
+        "--update-input"
+        "nixpkgs"
+        "-L" # print build logs
+      ];
+      dates = "04:00";
+      randomizedDelaySec = "45min";
+    };
+  };
 }

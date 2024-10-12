@@ -24,7 +24,15 @@
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [
+      "kvm-intel"
+      "coretemp"
+    ];
+    kernelPackages = pkgs.linuxPackages_latest;
+    hardwareScan = true;
+    blacklistedKernelModules = [
+      ""
+    ];
     extraModulePackages = [ ];
     loader = {
       systemd-boot.enable = true;
