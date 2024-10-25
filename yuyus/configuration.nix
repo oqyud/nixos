@@ -54,6 +54,9 @@ in
   };
 
   environment = {
+    etc = {
+      "nextcloud-admin-pass".text = "PWD";
+    };
     systemPackages = with pkgs; [
       #bash-completion
       #nix-bash-completions
@@ -94,11 +97,16 @@ in
   };
 
   services = {
+    nextcloud = {
+      enable = false;
+      package = pkgs.nextcloud30;
+      hostName = "0.0.0.0";
+      config.adminpassFile = "/etc/nextcloud-admin-pass";
+    };
     earlyoom.enable = true;
     preload.enable = true;
     auto-cpufreq.enable = true;
     throttled.enable = true;
-    watchdogd.enable = false;
     journald = {
       extraConfig = ''
         SystemMaxUse=128M
@@ -467,16 +475,16 @@ in
 
   system = {
     stateVersion = "24.05";
-    autoUpgrade = {
-      enable = true;
-      #flake = inputs.self.outPath;
-      flags = [
-        "--update-input"
-        "nixpkgs"
-        "-L" # print build logs
-      ];
-      dates = "04:00";
-      randomizedDelaySec = "45min";
-    };
+    #autoUpgrade = {
+    #  enable = true;
+    #  #flake = inputs.self.outPath;
+    #  flags = [
+    #    "--update-input"
+    #    "nixpkgs"
+    #    "-L" # print build logs
+    #  ];
+    #  dates = "04:00";
+    #  randomizedDelaySec = "45min";
+    #};
   };
 }
