@@ -60,7 +60,7 @@ in
     systemPackages = with pkgs; [
       #bash-completion
       #nix-bash-completions
-      neofetch
+      fastfetch
       acl
       pciutils # Info
       mc # tty
@@ -435,7 +435,7 @@ in
       enableBashCompletion = true;
       syntaxHighlighting.enable = true;
       zsh-autoenv.enable = true;
-      loginShellInit = "clear && neofetch";
+      loginShellInit = "clear && fastfetch";
       ohMyZsh = {
         enable = true;
         theme = "robbyrussell";
@@ -451,18 +451,21 @@ in
     };
   };
 
-  systemd.services = {
-    base-start = {
-      path = [ "/run/current-system/sw" ]; # Запуск в текущей системе
-      #setfacl -R -m u:yuyus:rwx /etc/nixos
-      script = ''
-        nixfmt /etc/nixos
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
+  systemd = {
+    network.wait-online.enable = false;
+    services = {
+      base-start = {
+        path = [ "/run/current-system/sw" ]; # Запуск в текущей системе
+        #setfacl -R -m u:yuyus:rwx /etc/nixos
+        script = ''
+          nixfmt /etc/nixos
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        wantedBy = [ "multi-user.target" ];
       };
-      wantedBy = [ "multi-user.target" ];
     };
   };
 
