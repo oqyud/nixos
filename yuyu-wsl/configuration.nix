@@ -47,7 +47,7 @@ in
 
   programs = {
     lazygit.enable = true;
-    #git.enable = true;
+    git.enable = true;
     nh.enable = true;
     zsh = {
       enable = true;
