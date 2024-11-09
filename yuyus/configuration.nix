@@ -5,11 +5,16 @@
   inputs,
   ...
 }:
-
 let
   my_vars = import ./my_vars.nix;
 in
 {
+  nix.nixPath = [
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+    "nixos-config=/etc/nixos/${my_vars.this-host}/configuration.nix"
+    "/nix/var/nix/profiles/per-user/root/channels"
+  ];
+
   imports = [
     "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
     ./disko.nix
@@ -74,7 +79,6 @@ in
       iptables
       efibootmgr # Info
       eza
-      inxi
     ];
   };
 
@@ -442,7 +446,6 @@ in
       };
     };
     nix-ld = {
-      # For binary files execution
       enable = false;
       libraries =
         with pkgs;
@@ -470,7 +473,7 @@ in
   };
 
   networking = {
-    hostName = "yuyus";
+    hostName = "${my_vars.this-host}";
     networkmanager.enable = true;
     firewall.enable = false;
     useDHCP = lib.mkDefault true;

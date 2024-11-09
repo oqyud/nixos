@@ -1,7 +1,7 @@
 rec {
-  host = "yuyus";
+  this-host = "yuyus";
   dirs = rec {
-    user-home = "/home/${host}";
+    user-home = "/home/${this-host}";
     home = "/mnt/server";
     structure = "${home}/Structure";
     sync = "${home}/Sync";
@@ -11,6 +11,6 @@ rec {
     user = "${structure}/User";
     programs = "${storage}/Programs";
     settings = "${storage}/Settings";
-    nixos = "${deploy}/NixOS/yuyus";
+    nixos = "${deploy}/NixOS";
   };
 }
