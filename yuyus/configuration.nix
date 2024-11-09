@@ -83,11 +83,6 @@ in
   };
 
   fileSystems = {
-    #"${my_vars.dirs.nixos}" = {
-    #  device = "/etc/nixos";
-    #  fsType = "none";
-    #  options = [ "bind" ];
-    #};
     "${my_vars.dirs.sync}/Symlinks/VY" = {
       device = "${my_vars.dirs.user}/Vaults/My/Хранилище/Базы данных/VY";
       fsType = "none";
