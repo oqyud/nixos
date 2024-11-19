@@ -60,7 +60,7 @@ in
 
   environment = {
     etc = {
-      "nextcloud-admin-pass".text = "PWD";
+      "nextcloud-admin-pass".text = "1234";
     };
     systemPackages = with pkgs; [
       #bash-completion
@@ -97,15 +97,51 @@ in
 
   services = {
     nextcloud = {
-      enable = false;
+      enable = true;
       package = pkgs.nextcloud30;
       hostName = "0.0.0.0";
-      config.adminpassFile = "/etc/nextcloud-admin-pass";
+      database.createLocally = true;
+      config = {
+        #dbtype = "pgsql";
+        dbuser = "nextcloud";
+        #dbhost = "/run/postgresql";
+        dbname = "nextcloud";
+        adminuser = "root";
+        adminpassFile = "/etc/nextcloud-admin-pass";
+      };
+      settings = {
+        trusted_domains = [
+          "100.64.0.0"
+          "192.168.1.18"
+        ];
+      };
     };
     earlyoom.enable = true;
     preload.enable = true;
     auto-cpufreq.enable = true;
     throttled.enable = true;
+    nginx = {
+      enable = true;
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+      virtualHosts = {
+        "cloud.example.com" = {
+          forceSSL = false;
+          enableACME = false;
+        };
+      };
+    };
+    postgresql = {
+      enable = true;
+      ensureDatabases = [ "nextcloud" ];
+      ensureUsers = [
+        {
+          name = "nextcloud"; # Здесь не хватает строчек\\
+        }
+      ];
+    };
     journald = {
       extraConfig = ''
         SystemMaxUse=128M
@@ -452,6 +488,10 @@ in
   systemd = {
     network.wait-online.enable = false;
     services = {
+      #nextcloud-setup = {
+      #  requires = [ "postgresql.service" ];
+      #  after = [ "postgresql.service" ];
+      #};
       base-start = {
         path = [ "/run/current-system/sw" ]; # Запуск в текущей системе
         #setfacl -R -m u:yuyus:rwx /etc/nixos
