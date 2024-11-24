@@ -135,7 +135,7 @@ in
     auto-cpufreq.enable = true;
     throttled.enable = true;
     nginx = {
-      enable = false;
+      enable = true;
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
@@ -146,7 +146,7 @@ in
           enableACME = false;
           #locations = {
           # "/" = {
-          #   proxyPass = "http://100.64.0.0:8080";
+          #   proxyPass = "https://100.64.0.0:8080";
           #   proxyWebsockets = true;
           #  };
           #};
@@ -159,15 +159,15 @@ in
         };
       };
     };
-    postgresql = {
-      enable = false;
-      ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [
-        {
-          name = "nextcloud"; # Здесь не хватает строчек\\
-        }
-      ];
-    };
+    #postgresql = {
+    #  enable = false;
+    #  ensureDatabases = [ "nextcloud" ];
+    #  ensureUsers = [
+    #    {
+    #      name = "nextcloud"; # Здесь не хватает строчек\\
+    #    }
+    #  ];
+    #};
     journald = {
       extraConfig = ''
         SystemMaxUse=128M
