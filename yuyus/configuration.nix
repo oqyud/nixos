@@ -115,26 +115,52 @@ in
           "192.168.1.18"
         ];
       };
+      extraAppsEnable = true;
+      extraApps = {
+        inherit (pkgs.nextcloud30Packages.apps)
+          mail
+          calendar
+          contacts
+          deck
+          bookmarks
+          notes
+          onlyoffice
+          polls
+          tasks
+          ;
+      };
     };
     earlyoom.enable = true;
     preload.enable = true;
     auto-cpufreq.enable = true;
     throttled.enable = true;
     nginx = {
-      enable = true;
+      enable = false;
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
-        "cloud.example.com" = {
+        "localhost" = {
           forceSSL = false;
           enableACME = false;
+          #locations = {
+          # "/" = {
+          #   proxyPass = "http://100.64.0.0:8080";
+          #   proxyWebsockets = true;
+          #  };
+          #};
+          listen = [
+            {
+              addr = "100.64.0.0";
+              port = 8080;
+            }
+          ];
         };
       };
     };
     postgresql = {
-      enable = true;
+      enable = false;
       ensureDatabases = [ "nextcloud" ];
       ensureUsers = [
         {
@@ -239,16 +265,16 @@ in
         rpc-whitelist-enabled = false;
       };
     };
-    cockpit = {
-      enable = true;
-      openFirewall = true;
-      port = 9090;
-      settings = {
-        WebService = {
-          AllowUnencrypted = true;
-        };
-      };
-    };
+    #cockpit = {
+    #  enable = true;
+    #  openFirewall = true;
+    #  port = 9090;
+    #  settings = {
+    #    WebService = {
+    #      AllowUnencrypted = true;
+    #    };
+    #  };
+    #};
     syncthing = {
       enable = true;
       systemService = true;
@@ -441,6 +467,15 @@ in
   };
 
   security = {
+    acme = {
+      #acceptTerms = true;
+      #defaults = {
+      #  email = "yuyus@example.com";
+      #}; 
+      #certs = {
+      #  "${config.services.nextcloud.hostName}".group = "nextcloud"; 
+      #};
+    };
     sudo.wheelNeedsPassword = false;
     polkit = {
       enable = true;
@@ -459,8 +494,8 @@ in
   programs = {
     nh = {
       enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 1d --keep 2";
+      #clean.enable = true;
+      #clean.extraArgs = "--keep-since 1d --keep 2";
     };
     git.enable = true;
     lazygit.enable = true;
