@@ -99,7 +99,7 @@ in
     nextcloud = {
       enable = true;
       package = pkgs.nextcloud30;
-      hostName = "0.0.0.0";
+      hostName = "localhost:10000";
       database.createLocally = true;
       config = {
         #dbtype = "pgsql";
@@ -113,6 +113,7 @@ in
         trusted_domains = [
           "100.64.0.0"
           "192.168.1.18"
+          "localhost:10000"
         ];
       };
       extraAppsEnable = true;
@@ -141,7 +142,7 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
-        "localhost" = {
+        "localhost:10000" = {
           forceSSL = false;
           enableACME = false;
           #locations = {
@@ -153,7 +154,7 @@ in
           listen = [
             {
               addr = "100.64.0.0";
-              port = 8080;
+              port = 10000;
             }
           ];
         };
