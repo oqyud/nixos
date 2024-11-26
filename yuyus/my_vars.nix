@@ -12,5 +12,6 @@ rec {
     programs = "${storage}/Programs";
     settings = "${storage}/Settings";
     nixos = "${deploy}/NixOS";
+    nextcloud-home = "${home}/Nextcloud";
   };
 }

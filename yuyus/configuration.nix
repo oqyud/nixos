@@ -60,7 +60,7 @@ in
 
   environment = {
     etc = {
-      "nextcloud-admin-pass".text = "1234";
+      "nextcloud-admin-pass".text = ">[81oFYa}3DVZR1c.u.?";
     };
     systemPackages = with pkgs; [
       #bash-completion
@@ -110,12 +110,12 @@ in
         adminpassFile = "/etc/nextcloud-admin-pass";
       };
       settings = {
+        appstoreEnable = true;
+        log_type = "file";
         trusted_domains = [
           "100.64.0.0"
           "192.168.1.18"
           "localhost"
-          "127.0.0.1"
-          "yuyus.tail8abae.ts.net"
         ];
       };
       extraAppsEnable = true;
