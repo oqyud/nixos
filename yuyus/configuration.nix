@@ -263,6 +263,7 @@ in
       enable = true;
       package = pkgs.transmission_4;
       openRPCPort = true;
+      credentialsFile = "/var/lib/credentials/transmission/settings.json";
       settings = {
         incomplete-dir-enabled = true;
         incomplete-dir = "${my_vars.dirs.home}/Downloads/Temp";
@@ -512,7 +513,7 @@ in
       enableBashCompletion = true;
       syntaxHighlighting.enable = true;
       zsh-autoenv.enable = true;
-      loginShellInit = "clear && fastfetch";
+      loginShellInit = "cd /etc/nixos && clear && fastfetch";
       ohMyZsh = {
         enable = true;
         theme = "robbyrussell";
