@@ -113,7 +113,9 @@ in
         trusted_domains = [
           "100.64.0.0"
           "192.168.1.18"
-          "localhost:10000"
+          "localhost"
+          "127.0.0.1"
+          "yuyus.tail8abae.ts.net"
         ];
       };
       extraAppsEnable = true;
@@ -147,13 +149,17 @@ in
           enableACME = false;
           #locations = {
           # "/" = {
-          #   proxyPass = "https://100.64.0.0:8080";
+          #   proxyPass = "https://100.64.0.0:10000";
           #   proxyWebsockets = true;
           #  };
           #};
           listen = [
             {
               addr = "100.64.0.0";
+              port = 10000;
+            }
+            {
+              addr = "192.168.1.18";
               port = 10000;
             }
           ];
