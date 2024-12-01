@@ -128,15 +128,33 @@ in
       extraAppsEnable = true;
       extraApps = {
         inherit (pkgs.nextcloud30Packages.apps)
-          mail
+          bookmarks
           calendar
           contacts
+          cookbook
+          cospend
           deck
-          bookmarks
+          end_to_end_encryption
+          forms
+          gpoddersync
+          groupfolders
+          impersonate
+          integration_paperless
+          mail
+          maps
+          memories
+          music
           notes
+          notify_push
           onlyoffice
           polls
+          previewgenerator
+          richdocuments
+          spreed
           tasks
+          user_oidc
+          user_saml
+          whiteboard
           ;
       };
     };
@@ -173,15 +191,15 @@ in
         };
       };
     };
-    #postgresql = {
-    #  enable = false;
+    postgresql = {
+      enable = false;
     #  ensureDatabases = [ "nextcloud" ];
     #  ensureUsers = [
     #    {
     #      name = "nextcloud"; # Здесь не хватает строчек\\
     #    }
     #  ];
-    #};
+    };
     journald = {
       extraConfig = ''
         SystemMaxUse=128M
