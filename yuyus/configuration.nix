@@ -193,12 +193,12 @@ in
     };
     postgresql = {
       enable = false;
-    #  ensureDatabases = [ "nextcloud" ];
-    #  ensureUsers = [
-    #    {
-    #      name = "nextcloud"; # Здесь не хватает строчек\\
-    #    }
-    #  ];
+      #  ensureDatabases = [ "nextcloud" ];
+      #  ensureUsers = [
+      #    {
+      #      name = "nextcloud"; # Здесь не хватает строчек\\
+      #    }
+      #  ];
     };
     journald = {
       extraConfig = ''
@@ -504,9 +504,9 @@ in
       #acceptTerms = true;
       #defaults = {
       #  email = "yuyus@example.com";
-      #}; 
+      #};
       #certs = {
-      #  "${config.services.nextcloud.hostName}".group = "nextcloud"; 
+      #  "${config.services.nextcloud.hostName}".group = "nextcloud";
       #};
     };
     sudo.wheelNeedsPassword = false;
