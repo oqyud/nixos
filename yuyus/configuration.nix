@@ -32,7 +32,10 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" ];
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [ "nix-command" ];
+  };
 
   users = {
     defaultUserShell = pkgs.zsh;
@@ -62,20 +65,20 @@ in
     systemPackages = with pkgs; [
       #bash-completion
       #nix-bash-completions
-      fastfetch
       acl
-      pciutils # Info
-      mc # tty
       btop # tty
-      lf # tty
-      parted # Disks
-      smartmontools # tty
-      nixfmt-rfc-style # Fronmatter
-      sing-box
-      yazi
-      iptables
       efibootmgr # Info
       eza
+      fastfetch
+      iptables
+      lf # tty
+      mc # tty
+      nixfmt-rfc-style # Fronmatter
+      parted # Disks
+      pciutils # Info
+      sing-box
+      smartmontools # tty
+      yazi
     ];
   };
 
@@ -279,23 +282,24 @@ in
         }
       ];
       settings = {
-        UsePAM = true;
-        PermitRootLogin = "yes";
         PasswordAuthentication = false;
+        PermitRootLogin = "yes";
+        UsePAM = true;
       };
     };
     transmission = {
       enable = true;
-      package = pkgs.transmission_4;
-      openRPCPort = true;
       credentialsFile = "${my_vars.dirs.credentials-target}/transmission/settings.json";
+      openRPCPort = true;
+      package = pkgs.transmission_4;
       settings = {
-        incomplete-dir-enabled = true;
-        incomplete-dir = "${my_vars.dirs.home}/Downloads/Temp";
         download-dir = "${my_vars.dirs.home}/Downloads";
+        incomplete-dir = "${my_vars.dirs.home}/Downloads/Temp";
+        incomplete-dir-enabled = true;
         rpc-bind-address = "0.0.0.0";
         rpc-port = 9091;
         rpc-whitelist-enabled = false;
+        umask = 0;
       };
     };
     #cockpit = {
