@@ -560,13 +560,8 @@ in
   systemd = {
     network.wait-online.enable = false;
     services = {
-      #nextcloud-setup = {
-      #  requires = [ "postgresql.service" ];
-      #  after = [ "postgresql.service" ];
-      #};
       base-start = {
         path = [ "/run/current-system/sw" ]; # Запуск в текущей системе
-        #setfacl -R -m u:yuyus:rwx /etc/nixos
         script = ''
           nixfmt /etc/nixos
         '';
@@ -588,16 +583,5 @@ in
 
   system = {
     stateVersion = "24.05";
-    #autoUpgrade = {
-    #  enable = true;
-    #  #flake = inputs.self.outPath;
-    #  flags = [
-    #    "--update-input"
-    #    "nixpkgs"
-    #    "-L" # print build logs
-    #  ];
-    #  dates = "04:00";
-    #  randomizedDelaySec = "45min";
-    #};
   };
 }
