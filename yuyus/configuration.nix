@@ -59,9 +59,6 @@ in
   };
 
   environment = {
-    etc = {
-      "nextcloud-admin-pass".text = ">[81oFYa}3DVZR1c.u.?";
-    };
     systemPackages = with pkgs; [
       #bash-completion
       #nix-bash-completions
@@ -93,6 +90,16 @@ in
       fsType = "none";
       options = [ "bind" ];
     };
+    "${my_vars.dirs.credentials-target}" = {
+      device = "${my_vars.dirs.credentials-source-server}";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+    "${my_vars.dirs.nextcloud-target}" = {
+      device = "${my_vars.dirs.nextcloud-source}";
+      fsType = "ext4";
+      options = [ "bind" ];
+    };
   };
 
   services = {
@@ -102,15 +109,15 @@ in
       hostName = "localhost:10000";
       database.createLocally = true;
       config = {
-        #dbtype = "pgsql";
+        dbtype = "mysql";
         dbuser = "nextcloud";
         #dbhost = "/run/postgresql";
         dbname = "nextcloud";
         adminuser = "root";
-        adminpassFile = "/etc/nextcloud-admin-pass";
+        adminpassFile = "${my_vars.dirs.credentials-target}/nextcloud/admin-pass.txt";
       };
       settings = {
-        appstoreEnable = true;
+        appstoreEnable = false;
         log_type = "file";
         trusted_domains = [
           "100.64.0.0"
@@ -263,7 +270,7 @@ in
       enable = true;
       package = pkgs.transmission_4;
       openRPCPort = true;
-      credentialsFile = "/var/lib/credentials/transmission/settings.json";
+      credentialsFile = "${my_vars.dirs.credentials-target}/transmission/settings.json";
       settings = {
         incomplete-dir-enabled = true;
         incomplete-dir = "${my_vars.dirs.home}/Downloads/Temp";

@@ -12,6 +12,9 @@ rec {
     programs = "${storage}/Programs";
     settings = "${storage}/Settings";
     nixos = "${deploy}/NixOS";
-    nextcloud-home = "${home}/Nextcloud";
+    nextcloud-source = "${home}/Nextcloud";
+    nextcloud-target = "/var/lib/nextcloud";
+    credentials-source-server = "${home}/Credentials/.server";
+    credentials-target = "/var/lib/credentials";
   };
 }
