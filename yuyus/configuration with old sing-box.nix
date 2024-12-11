@@ -302,6 +302,16 @@ in
         umask = 0;
       };
     };
+    #cockpit = {
+    #  enable = true;
+    #  openFirewall = true;
+    #  port = 9090;
+    #  settings = {
+    #    WebService = {
+    #      AllowUnencrypted = true;
+    #    };
+    #  };
+    #};
     syncthing = {
       enable = true;
       systemService = true;
@@ -312,6 +322,7 @@ in
       user = "yuyus";
     };
     tailscale.enable = true;
+    #httpd.enable = true;
     sing-box = {
       enable = true;
       settings = {
@@ -349,7 +360,6 @@ in
               domain = [
                 "tendawifi.com"
                 "sync-v2.brave.com"
-                "kodik.info"
               ];
               server = "dns-direct";
             }
@@ -365,6 +375,7 @@ in
               server = "dns-block";
             }
           ];
+
           independent_cache = true;
         };
         inbounds = [
@@ -374,7 +385,6 @@ in
             listen = "127.0.0.1";
             listen_port = 2080;
             sniff = true;
-            sniff_override_destination = true;
             domain_strategy = "prefer_ipv4";
           }
           {
@@ -382,14 +392,12 @@ in
             tag = "tun-in";
             interface_name = "nekoray-tun";
             mtu = 9000;
+            inet4_address = "172.19.0.1/28";
             auto_route = true;
             endpoint_independent_nat = true;
-            stack = "gvisor";
+            stack = "system";
             sniff = true;
-            sniff_override_destination = true;
             domain_strategy = "prefer_ipv4";
-            inet4_address = "172.19.0.1/28";
-            inet6_address = "fdfe:dcba:9876::1/126";
           }
         ];
         outbounds = [
@@ -397,21 +405,21 @@ in
             type = "vless";
             tag = "proxy";
             domain_strategy = "prefer_ipv4";
-            server = "193.43.91.29";
+            server = "185.31.200.24";
             server_port = 443;
-            uuid = "35f58aed-6c15-40bd-b355-c4b838c8dd14";
+            uuid = "a085c589-e7d9-43f7-81ad-dff4096c4aa6";
             flow = "xtls-rprx-vision";
             tls = {
               enabled = true;
-              server_name = "cloudflare.com";
+              server_name = "www.samsung.com";
               utls = {
                 enabled = true;
                 fingerprint = "chrome";
               };
               reality = {
                 enabled = true;
-                public_key = "B8zF02SyooHewhqHrmGjw6NrkqJkQrkJudaOmknPYRU";
-                short_id = "2897b279bb";
+                public_key = "Qnt-WTl02JRNw2ev--JInZ-egrCrK1RDjc927kIPUxk";
+                short_id = "8f2a76376de91be1";
               };
             };
             packet_encoding = "";
@@ -443,7 +451,6 @@ in
               domain = [
                 "tendawifi.com"
                 "sync-v2.brave.com"
-                "kodik.info"
               ];
               outbound = "bypass";
             }
@@ -484,18 +491,7 @@ in
             }
             {
               process_name = [
-                "syncthing.exe"
-                "kdeconnectd.exe"
-                "kdeconnect-indicator.exe"
-                "kdeconnect-app.exe"
-                ".tailscaled.exe"
-                "tailscale-ipn.exe"
-                "RvControlSvc.exe"
-                "RvRvpnGui.exe"
-                "svchost.exe"
-                "rdpclip.exe"
-                "Discovery.exe"
-                "transmission-qt.exe"
+                ""
               ];
               outbound = "bypass";
             }
@@ -533,7 +529,11 @@ in
   };
 
   programs = {
-    nh.enable = true;
+    nh = {
+      enable = true;
+      #clean.enable = true;
+      #clean.extraArgs = "--keep-since 1d --keep 2";
+    };
     git.enable = true;
     lazygit.enable = true;
     zsh = {
