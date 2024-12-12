@@ -98,16 +98,16 @@ in
       fsType = "none";
       options = [ "bind" ];
     };
-    "${my_vars.dirs.nextcloud-target}" = {
-      device = "${my_vars.dirs.nextcloud-source}";
-      fsType = "ext4";
-      options = [ "bind" ];
-    };
+    #"${my_vars.dirs.nextcloud-target}" = {
+    #  device = "${my_vars.dirs.nextcloud-source}";
+    #  fsType = "ext4";
+    #  options = [ "bind" ];
+    #};
   };
 
   services = {
     nextcloud = {
-      enable = true;
+      enable = false;
       package = pkgs.nextcloud30;
       hostName = "localhost:10000";
       database.createLocally = true;
