@@ -84,7 +84,7 @@ in
 
   fileSystems = {
     "${my_vars.dirs.sync}/Symlinks/VY" = {
-      device = "${my_vars.dirs.user}/Vaults/My/Хранилище/Базы данных/VY";
+      device = "${my_vars.dirs.user}/Vaults/My/Общие/VY";
       fsType = "none";
       options = [ "bind" ];
     };
