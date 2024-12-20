@@ -550,10 +550,8 @@ in
     };
     nix-ld = {
       enable = false;
-      libraries =
-        with pkgs;
-        [
-        ];
+      libraries = with pkgs; [
+      ];
     };
   };
 
